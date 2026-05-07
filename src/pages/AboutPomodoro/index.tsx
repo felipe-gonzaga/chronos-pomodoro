@@ -1,9 +1,9 @@
-import { Container } from '../../Container';
-import { GenericHtml } from '../../GenericHtml';
-import { Heading } from '../../Heading';
+import { Container } from '../../components/Container';
+import { GenericHtml } from '../../components/GenericHtml';
+import { Heading } from '../../components/Heading';
 import { MainTemplate } from '../../templates/MainTemplate';
 
-export function NotFound() {
+export function AboutPomodoro() {
   return (
     <MainTemplate>
       <Container>
