@@ -3,7 +3,7 @@ import { Cycles } from '../Cycles';
 import { DefaultButton } from '../DefaultButton';
 import { DefaultInput } from '../DefaultInput';
 import { useRef } from 'react';
-import type { TaskModel } from '../../models/TaskModel';
+import { TaskModel } from '../../models/TaskModel';
 import { useTaskContext } from '../../contexts/TaskContext/useTaskContext';
 import { getNextCycle } from '../../utils/getNextCycle';
 import { getNextCycleType } from '../../utils/getNextCycleType';
@@ -14,15 +14,17 @@ export function MainForm() {
   const { state, dispatch } = useTaskContext();
   const taskNameInput = useRef<HTMLInputElement>(null);
 
+  // ciclos
   const nextCycle = getNextCycle(state.currentCycle);
-  const nextCycleType = getNextCycleType(nextCycle);
+  const nextCyleType = getNextCycleType(nextCycle);
 
-  function handleCreateNewTask(event: React.SubmitEvent<HTMLFormElement>) {
+  function handleCreateNewTask(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (taskNameInput.current === null) return;
 
     const taskName = taskNameInput.current.value.trim();
+
     if (!taskName) {
       alert('Digite o nome da tarefa');
       return;
@@ -34,8 +36,8 @@ export function MainForm() {
       startDate: Date.now(),
       completeDate: null,
       interruptDate: null,
-      duration: state.config[nextCycleType],
-      type: nextCycleType,
+      duration: state.config[nextCyleType],
+      type: nextCyleType,
     };
 
     dispatch({ type: TaskActionTypes.START_TASK, payload: newTask });
@@ -49,9 +51,9 @@ export function MainForm() {
     <form onSubmit={handleCreateNewTask} className='form' action=''>
       <div className='formRow'>
         <DefaultInput
+          labelText='task'
           id='meuInput'
           type='text'
-          labelText='Task'
           placeholder='Digite algo'
           ref={taskNameInput}
           disabled={!!state.activeTask}
@@ -59,7 +61,7 @@ export function MainForm() {
       </div>
 
       <div className='formRow'>
-        <Tips></Tips>
+        <Tips />
       </div>
 
       {state.currentCycle > 0 && (
@@ -71,22 +73,23 @@ export function MainForm() {
       <div className='formRow'>
         {!state.activeTask && (
           <DefaultButton
-            type='submit'
-            icon={<PlayCircleIcon />}
             aria-label='Iniciar nova tarefa'
             title='Iniciar nova tarefa'
-            key='botaoSubmit'
+            type='submit'
+            icon={<PlayCircleIcon />}
+            key='botao_submit'
           />
         )}
+
         {!!state.activeTask && (
           <DefaultButton
+            aria-label='Interromper tarefa atual'
+            title='Interromper tarefa atual'
             type='button'
-            icon={<StopCircleIcon />}
             color='red'
-            aria-label='Interromper nova tarefa'
-            title='Interromper nova tarefa'
+            icon={<StopCircleIcon />}
             onClick={handleInterruptTask}
-            key='botaoButton'
+            key='botao_button'
           />
         )}
       </div>

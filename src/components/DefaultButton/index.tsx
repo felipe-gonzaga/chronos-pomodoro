@@ -1,5 +1,4 @@
-import type React from 'react';
-import style from './styles.module.css';
+import styles from './styles.module.css';
 
 type DefaultButtonProps = {
   icon: React.ReactNode;
@@ -13,7 +12,7 @@ export function DefaultButton({
 }: DefaultButtonProps) {
   return (
     <>
-      <button className={`${style.button} ${style[color]}`} {...props}>
+      <button className={`${styles.button} ${styles[color]}`} {...props}>
         {icon}
       </button>
     </>

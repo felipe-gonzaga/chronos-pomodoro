@@ -4,16 +4,12 @@ import { getNextCycleType } from '../../utils/getNextCycleType';
 
 export function Tips() {
   const { state } = useTaskContext();
-
   const nextCycle = getNextCycle(state.currentCycle);
-  const nextCycleType = getNextCycleType(nextCycle);
+  const nextCyleType = getNextCycleType(nextCycle);
 
+  // Tips
   const tipsForWhenActiveTask = {
-    workTime: (
-      <span>
-        Foque por <b>{state.config.workTime}min</b>
-      </span>
-    ),
+    workTime: <span>Foque por {state.config.workTime}min</span>,
     shortBreakTime: <span>Descanse por {state.config.shortBreakTime}min</span>,
     longBreakTime: <span>Descanso longo</span>,
   };
@@ -25,15 +21,15 @@ export function Tips() {
       </span>
     ),
     shortBreakTime: (
-      <span>Próximo descanso é de {state.config.shortBreakTime}min</span>
+      <span>Próximo descaso é de {state.config.shortBreakTime}min</span>
     ),
-    longBreakTime: <span>Próximo descanço será longo</span>,
+    longBreakTime: <span>Próximo descanso será longo</span>,
   };
 
   return (
     <>
       {!!state.activeTask && tipsForWhenActiveTask[state.activeTask.type]}
-      {!state.activeTask && tipsForNoActiveTask[nextCycleType]}
+      {!state.activeTask && tipsForNoActiveTask[nextCyleType]}
     </>
   );
 }
