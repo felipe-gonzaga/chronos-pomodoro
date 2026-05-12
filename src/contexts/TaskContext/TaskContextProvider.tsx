@@ -1,10 +1,10 @@
 import { useEffect, useReducer, useRef } from 'react';
 import { initialTaskState } from './initialTaskState';
-import { TaskContext } from './TaskContext';
 import { taskReducer } from './taskReducer';
 import { TimerWorkerManager } from '../../workers/TimerWorkerManager';
 import { TaskActionTypes } from './taskActions';
 import { loadBeep } from '../../utils/loadBeep';
+import { TaskContext } from './TaskContext';
 
 type TaskContextProviderProps = {
   children: React.ReactNode;
@@ -41,6 +41,8 @@ export function TaskContextProvider({ children }: TaskContextProviderProps) {
     if (!state.activeTask) {
       worker.terminate();
     }
+
+    document.title = `${state.formattedSecondsRemaining} - Chronos Pomodoro`;
 
     worker.postMessage(state);
   }, [worker, state]);
