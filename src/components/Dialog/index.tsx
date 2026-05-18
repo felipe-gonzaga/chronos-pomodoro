@@ -1,10 +1,17 @@
-import { ToastContentProps } from 'react-toastify';
 import { DefaultButton } from '../DefaultButton';
 import { ThumbsDownIcon, ThumbsUpIcon } from 'lucide-react';
 
 import styles from './styles.module.css';
 
-export function Dialog({ closeToast, data }: ToastContentProps<string>) {
+type CloseToastFunc = ((reason?: boolean | string) => void) &
+  ((e: React.MouseEvent) => void);
+
+type DialogProps = {
+  closeToast: CloseToastFunc;
+  data: string;
+};
+
+export function Dialog({ closeToast, data }: DialogProps) {
   return (
     <>
       <div className={styles.container}>

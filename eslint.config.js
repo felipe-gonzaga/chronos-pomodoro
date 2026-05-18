@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
-  <head>
-    <meta charset="UTF-8" />
+import js from '@eslint/js';
+import globals from 'globals';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import tseslint from 'typescript-eslint';
 
-    <link
-      rel="icon"
-      type="image/png"
-      href="/images/favicon/favicon-96x96.png"
-      sizes="96x96"
-    />
-
-    <link rel="icon" type="image/svg+xml" href="/images/favicon/favicon.svg" />
-    <link rel="icon" type="image/png" href="/images/favicon/favicon.png" />
-
-    <link rel="shortcut icon" href="/images/favicon/favicon.ico" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/images/favicon/apple-touch-icon.png"
-    />
-    <link rel="manifest" href="/images/favicon/site.webmanifest" />
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chronos Pomodoro</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+export default tseslint.config(
+  { ignores: ['dist'] },
+  {
+    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    files: ['**/*.{ts,tsx}'],
+    languageOptions: {
+      ecmaVersion: 2020,
+      globals: globals.browser,
+    },
+    plugins: {
+      'react-hooks': reactHooks,
+      'react-refresh': reactRefresh,
+    },
+    rules: {
+      ...reactHooks.configs.recommended.rules,
+      'react-refresh/only-export-components': [
+        'warn',
+        { allowConstantExport: true },
+      ],
+    },
+  },
+);
